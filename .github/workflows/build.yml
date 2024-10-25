@@ -41,8 +41,8 @@ jobs:
 
       - name: Checkout & Build
         run: |
-          git clone --recursive https://github.com/stdware/qwindowkit -G "MinGW Makefiles"
+          git clone --recursive https://github.com/stdware/qwindowkit
           cd qwindowkit
-          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=D:/qwindowkit
+          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=D:/qwindowkit -G "MinGW Makefiles"
           cmake --build build --target install --config Debug
           cmake --build build --target install --config Release
