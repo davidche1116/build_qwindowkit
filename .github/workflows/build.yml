@@ -43,6 +43,6 @@ jobs:
         run: |
           git clone --recursive https://github.com/stdware/qwindowkit
           cd qwindowkit
-          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=D:/qwindowkit -G "Ninja Multi-Config"
+          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=D:/qwindowkit
           cmake --build build --target install --config Debug
           cmake --build build --target install --config Release
