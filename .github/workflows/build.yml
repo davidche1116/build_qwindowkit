@@ -1,4 +1,4 @@
-name: MinGW Build
+name: Build
 
 on:
   workflow_dispatch:
@@ -34,7 +34,12 @@ jobs:
           arch: ${{ inputs.qt_arch }}
           tools: ${{ inputs.qt_tools }}
 
-      - name: Checkout
+      - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
+        with:
+          version: 1.12.1
+
+      - name: Checkout & Build
         run: |
           git clone --recursive https://github.com/stdware/qwindowkit
           cd qwindowkit
