@@ -14,7 +14,7 @@ on:
         type: string
         description: 'qt_arch'
       qt_tools:
-        default: 'tools_cmake,tools_ninja'
+        default: 'tools_cmake tools_ninja'
         required: true
         type: string
         description: 'qt_tools'
