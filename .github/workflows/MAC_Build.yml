@@ -43,7 +43,7 @@ jobs:
         run: |
           git clone --recursive https://github.com/stdware/qwindowkit
           cd qwindowkit
-          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/qwindowkit
+          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/Users/runner/work/qwindowkit
           cmake --build build --target install --config Debug
           cmake --build build --target install --config Release
 
@@ -52,6 +52,6 @@ jobs:
         with:
           name: qwindowkit
           path: |
-            /qwindowkit/**
+            /Users/runner/work/qwindowkit/**
           overwrite: true
           compression-level: 9
