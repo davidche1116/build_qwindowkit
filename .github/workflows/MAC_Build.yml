@@ -1,0 +1,57 @@
+name: MAC Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      qt_version:
+        default: '6.8.0'
+        required: true
+        type: string
+        description: 'qt_version'
+      qt_arch:
+        default: 'clang_64'
+        required: true
+        type: string
+        description: 'qt_arch'
+      qt_tools:
+        default: 'tools_cmake,tools_ninja'
+        required: true
+        type: string
+        description: 'qt_tools'
+
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          host: 'mac'
+          target: 'desktop'
+          version: ${{ inputs.qt_version }}
+          arch: ${{ inputs.qt_arch }}
+          tools: ${{ inputs.qt_tools }}
+
+      # - name: Setup Ninja
+      #   uses: ashutoshvarma/setup-ninja@master
+      #   with:
+      #     version: 1.12.1
+
+      - name: Checkout & Build
+        run: |
+          git clone --recursive https://github.com/stdware/qwindowkit
+          cd qwindowkit
+          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=/qwindowkit
+          cmake --build build --target install --config Debug
+          cmake --build build --target install --config Release
+
+      - name: Package ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: qwindowkit
+          path: |
+            /qwindowkit/**
+          overwrite: true
+          compression-level: 9
