@@ -36,7 +36,7 @@ jobs:
         run: |
           git clone --recursive https://github.com/stdware/qwindowkit
           cd qwindowkit
-          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=D:/qwindowkit -DQWINDOWKIT_BUILD_STATIC=TRUE -G "MinGW Makefiles"
+          cmake -B build -S . -DCMAKE_INSTALL_PREFIX=D:/qwindowkit -DQWINDOWKIT_BUILD_STATIC=FALSE -G "MinGW Makefiles"
           cmake --build build --target install --config Release
 
       - name: Package ZIP
