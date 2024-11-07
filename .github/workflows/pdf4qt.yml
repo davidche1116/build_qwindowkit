@@ -24,6 +24,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    
+      - name: Install vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg && bootstrap-vcpkg.bat
+          set "VCPKG_ROOT=D:\a\build_qwindowkit\build_qwindowkit\vcpkg"
+          set PATH=%VCPKG_ROOT%;%PATH%
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
@@ -32,9 +40,6 @@ jobs:
           version: ${{ inputs.qt_version }}
           arch: ${{ inputs.qt_arch }}
           tools: ${{ inputs.qt_tools }}
-
-      - name: Install vcpkg
-        uses: lukka/run-vcpkg@v11
 
       - name: Checkout & Build
         run: |
