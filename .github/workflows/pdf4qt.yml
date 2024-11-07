@@ -24,14 +24,6 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    
-      - name: Install vcpkg
-        run: |
-          git clone https://github.com/microsoft/vcpkg.git
-          cd vcpkg; .\bootstrap-vcpkg.bat
-          $env:VCPKG_ROOT = "D:\a\build_qwindowkit\build_qwindowkit\vcpkg"
-          $env:PATH = "$env:VCPKG_ROOT;$env:PATH"
-
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
@@ -43,9 +35,13 @@ jobs:
 
       - name: Checkout & Build
         run: |
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg; .\bootstrap-vcpkg.bat
+          $env:VCPKG_ROOT = "D:\a\build_qwindowkit\build_qwindowkit\vcpkg"
+          $env:PATH = "$env:VCPKG_ROOT;$env:PATH"
           git clone https://github.com/JakubMelka/PDF4QT
           cd PDF4QT
-          cmake -B build -S . -DPDF4QT_INSTALL_QT_DEPENDENCIES=0 -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX='D:/p4q' -DCMAKE_BUILD_TYPE=Release
+          cmake -B build -S . -DPDF4QT_INSTALL_QT_DEPENDENCIES=0 -DCMAKE_TOOLCHAIN_FILE=D:/a/build_qwindowkit/build_qwindowkit/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX='D:/p4q' -DCMAKE_BUILD_TYPE=Release
           cmake --build build
           cmake --install build
 
