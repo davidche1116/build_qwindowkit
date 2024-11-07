@@ -32,6 +32,7 @@ jobs:
           version: ${{ inputs.qt_version }}
           arch: ${{ inputs.qt_arch }}
           tools: ${{ inputs.qt_tools }}
+          modules: 'qtspeech'
 
       - name: Checkout & Build
         run: |
