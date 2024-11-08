@@ -1,0 +1,52 @@
+name: QtPdfium Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      qt_version:
+        default: '6.8.0'
+        required: true
+        type: string
+        description: 'qt_version'
+      qt_arch:
+        default: 'win64_mingw'
+        required: true
+        type: string
+        description: 'qt_arch'
+      qt_tools:
+        default: 'tools_mingw1310'
+        required: true
+        type: string
+        description: 'qt_tools'
+
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          host: 'windows'
+          target: 'desktop'
+          version: ${{ inputs.qt_version }}
+          arch: ${{ inputs.qt_arch }}
+          tools: ${{ inputs.qt_tools }}
+
+      - name: Checkout & Build
+        run: |
+          git clone --recursive https://github.com/paulovap/qtpdfium
+          cd qtpdfium
+          qmake
+          make
+          make install
+
+      - name: Package ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: qwindowkit
+          path: |
+            D:/qwindowkit/**
+          overwrite: true
+          compression-level: 9
